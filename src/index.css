@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;700&family=Montserrat:wght@300;400;500&family=Noto+Sans:wght@300;400;500&display=swap');
+
+@theme {
+  --color-primary: #8c6a45;
+  --color-primary-hover: #c4965e;
+  --color-bg-dark: #061221;
+  --color-bg-sidebar: #0e1e30;
+  --color-bg-thumb: #091b31;
+  --color-bg-input: #353f4b;
+  --color-border-thumb: #47413c;
+
+  --font-sans: "Gothic A1", "Century Gothic", "Montserrat", "Noto Sans", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-dark text-primary font-sans select-none overflow-hidden text-[16px];
+  }
+
+  h1 {
+    @apply text-[24px] font-bold;
+  }
+
+  h2 {
+    @apply text-[22px] font-medium;
+  }
+
+  p {
+    @apply text-[16px];
+  }
+
+  /* Hide reCAPTCHA badge */
+  .grecaptcha-badge {
+    visibility: hidden !important;
+  }
+}
+
+@layer components {
+  .view-container {
+    @apply flex items-center justify-center w-full h-full relative;
+  }
+
+  .view-content {
+    @apply flex flex-col items-center justify-center w-full h-full transition-opacity duration-[3000ms] ease-in-out;
+  }
+
+  .text-content {
+    @apply max-w-[600px] text-[16px] leading-[1.9] text-justify;
+  }
+
+  .contact-input {
+    @apply w-full h-[35px] bg-bg-input border-none text-primary text-[14px] pl-[10px] outline-none block mb-2 box-border;
+    font-family: inherit;
+  }
+}
