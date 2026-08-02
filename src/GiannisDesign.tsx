@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import apiClient from "./lib/apiClient";
 import HomeView from "./components/views/HomeView";
 import GalleryView from "./components/views/GalleryView";
 import AboutView from "./components/views/AboutView";
@@ -58,10 +59,8 @@ export default function GiannisDesign() {
 
   // Fetch Gallery Data
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || "";
-    fetch(`${apiUrl}/api/public/portfolio/main`)
-      .then(res => res.json())
-      .then((resp: ApiResponse) => {
+    apiClient.get<ApiResponse>("/portfolio/main")
+      .then(({ data: resp }) => {
         if (resp.data && resp.data.length > 0) {
           const mapped: GalleryImage[] = resp.data.map((img, i, arr) => {
             return {
@@ -80,10 +79,8 @@ export default function GiannisDesign() {
 
   // Fetch App Settings
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || "";
-    fetch(`${apiUrl}/api/public/application-settings`)
-      .then(res => res.json())
-      .then((resp: SettingsResponse) => {
+    apiClient.get<SettingsResponse>("/application-settings")
+      .then(({ data: resp }) => {
         if (resp.data) {
           setSettings(resp.data);
           

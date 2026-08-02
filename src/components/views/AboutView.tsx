@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import apiClient from "../../lib/apiClient";
 
 interface AboutData {
   "about.h1": string;
@@ -23,17 +24,10 @@ const AboutView: React.FC = () => {
       return;
     }
 
-    const apiUrl = import.meta.env.VITE_API_URL || "";
-    const fullUrl = `${apiUrl}/api/public/dynamic-section/about`;
-    
     setLoading(true);
-    
-    fetch(fullUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Network response was not ok: ${res.status}`);
-        return res.json();
-      })
-      .then((resp) => {
+
+    apiClient.get("/dynamic-section/about")
+      .then(({ data: resp }) => {
         if (resp && resp.data) {
           cachedAboutData = resp.data;
           setData(resp.data);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import apiClient from "../../lib/apiClient";
 
 interface ContactData {
   "contact.form-submit": string;
@@ -35,14 +36,11 @@ const ContactView: React.FC<ContactViewProps> = ({ recaptchaKey }) => {
   const [status, setStatus] = useState<null | 'sending' | 'success' | 'error'>(null);
 
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || "";
-
     // Fetch Contact Content
     if (!cachedContactData) {
       setLoading(true);
-      fetch(`${apiUrl}/api/public/dynamic-section/contact`)
-        .then((res) => res.json())
-        .then((resp) => {
+      apiClient.get("/dynamic-section/contact")
+        .then(({ data: resp }) => {
           if (resp && resp.data) {
             cachedContactData = resp.data;
             setData(resp.data);
@@ -54,9 +52,8 @@ const ContactView: React.FC<ContactViewProps> = ({ recaptchaKey }) => {
 
     // Fetch Social Links
     if (!cachedSocialData) {
-      fetch(`${apiUrl}/api/public/social`)
-        .then((res) => res.json())
-        .then((resp) => {
+      apiClient.get("/social")
+        .then(({ data: resp }) => {
           if (resp && resp.data) {
             cachedSocialData = resp.data;
             setSocials(resp.data);
@@ -97,13 +94,7 @@ const ContactView: React.FC<ContactViewProps> = ({ recaptchaKey }) => {
           });
         });
       }
-      const apiUrl = import.meta.env.VITE_API_URL || "";
-      const response = await fetch(`${apiUrl}/api/public/submit-form/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, recaptchaToken }),
-      });
-      if (!response.ok) throw new Error("Form submission failed");
+      await apiClient.post("/submit-form/contact", { ...form, recaptchaToken });
       setStatus("success");
       setForm({ name: "", email: "", phone: "", company: "", message: "" });
     } catch (err) {
