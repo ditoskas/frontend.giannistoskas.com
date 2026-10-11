@@ -17,7 +17,7 @@ const HomeView: React.FC = () => {
         <img
           src={logo}
           alt="Giannis Design — Interior Designer"
-          className="max-w-[60%] max-h-[55%] object-contain"
+          className="max-w-[30%] max-h-[55%] object-contain"
         />
       </div>
     </div>
