@@ -19,7 +19,7 @@
   }
 
   h1 {
-    @apply text-[24px] font-bold;
+    @apply text-[24px] font-medium;
   }
 
   h2 {
