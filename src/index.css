@@ -10,7 +10,7 @@
   --color-bg-input: #353f4b;
   --color-border-thumb: #47413c;
 
-  --font-sans: "Gothic A1", "Century Gothic", "Montserrat", "Noto Sans", sans-serif;
+  --font-sans: Arial, Helvetica, sans-serif;
 }
 
 @layer base {
